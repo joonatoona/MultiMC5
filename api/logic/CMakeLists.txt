@@ -210,8 +210,6 @@ set(MINECRAFT_SOURCES
 	minecraft/onesix/OneSixUpdate.cpp
 	minecraft/onesix/OneSixInstance.h
 	minecraft/onesix/OneSixInstance.cpp
-	minecraft/onesix/OneSixProfileStrategy.cpp
-	minecraft/onesix/OneSixProfileStrategy.h
 	minecraft/onesix/OneSixVersionFormat.cpp
 	minecraft/onesix/OneSixVersionFormat.h
 	minecraft/onesix/update/AssetUpdateTask.h
@@ -251,7 +249,6 @@ set(MINECRAFT_SOURCES
 	minecraft/ParseUtils.h
 	minecraft/ProfileUtils.cpp
 	minecraft/ProfileUtils.h
-	minecraft/ProfileStrategy.h
 	minecraft/Library.cpp
 	minecraft/Library.h
 	minecraft/MojangDownloadInfo.h

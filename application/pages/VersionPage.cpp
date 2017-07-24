@@ -50,13 +50,13 @@ class IconProxy : public QIdentityProxyModel
 {
 	Q_OBJECT
 public:
-	
+
 	IconProxy(QWidget *parentWidget) : QIdentityProxyModel(parentWidget)
 	{
 		connect(parentWidget, &QObject::destroyed, this, &IconProxy::widgetGone);
 		m_parentWidget = parentWidget;
 	}
-	
+
 	virtual QVariant data(const QModelIndex &proxyIndex, int role = Qt::DisplayRole) const override
 	{
 		QVariant var = QIdentityProxyModel::data(mapToSource(proxyIndex), role);
@@ -131,7 +131,7 @@ VersionPage::VersionPage(OneSixInstance *inst, QWidget *parent)
 	{
 		disableVersionControls();
 	}
-	connect(m_inst, &OneSixInstance::versionReloaded, this,
+	connect(m_inst, &MinecraftInstance::versionReloaded, this,
 			&VersionPage::updateVersionControls);
 }
 
@@ -396,8 +396,8 @@ void VersionPage::on_forgeBtn_clicked()
 		return;
 	}
 	VersionSelectDialog vselect(vlist.get(), tr("Select Forge version"), this);
-	vselect.setExactFilter(BaseVersionList::ParentVersionRole, m_inst->currentVersionId());
-	vselect.setEmptyString(tr("No Forge versions are currently available for Minecraft ") + m_inst->currentVersionId());
+	vselect.setExactFilter(BaseVersionList::ParentVersionRole, m_inst->getComponentVersion("net.minecraft"));
+	vselect.setEmptyString(tr("No Forge versions are currently available for Minecraft ") + m_inst->getComponentVersion("net.minecraft"));
 	vselect.setEmptyErrorString(tr("Couldn't load or download the Forge version lists!"));
 	if (vselect.exec() && vselect.selectedVersion())
 	{
@@ -418,8 +418,8 @@ void VersionPage::on_liteloaderBtn_clicked()
 		return;
 	}
 	VersionSelectDialog vselect(vlist.get(), tr("Select LiteLoader version"), this);
-	vselect.setExactFilter(BaseVersionList::ParentVersionRole, m_inst->currentVersionId());
-	vselect.setEmptyString(tr("No LiteLoader versions are currently available for Minecraft ") + m_inst->currentVersionId());
+	vselect.setExactFilter(BaseVersionList::ParentVersionRole, m_inst->getComponentVersion("net.minecraft"));
+	vselect.setEmptyString(tr("No LiteLoader versions are currently available for Minecraft ") + m_inst->getComponentVersion("net.minecraft"));
 	vselect.setEmptyErrorString(tr("Couldn't load or download the LiteLoader version lists!"));
 	if (vselect.exec() && vselect.selectedVersion())
 	{
@@ -563,3 +563,4 @@ void VersionPage::on_revertBtn_clicked()
 }
 
 #include "VersionPage.moc"
+

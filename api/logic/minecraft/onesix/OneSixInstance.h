@@ -29,63 +29,12 @@ public:
 	explicit OneSixInstance(SettingsObjectPtr globalSettings, SettingsObjectPtr settings, const QString &rootDir);
 	virtual ~OneSixInstance(){};
 
-	virtual void init() override;
-
-	//////  Mod Lists  //////
-	std::shared_ptr<ModList> loaderModList() const;
-	std::shared_ptr<ModList> coreModList() const;
-	std::shared_ptr<ModList> resourcePackList() const override;
-	std::shared_ptr<ModList> texturePackList() const override;
-	std::shared_ptr<WorldList> worldList() const override;
-	virtual QList<Mod> getJarMods() const override;
-	virtual void createProfile();
-
 	virtual QSet<QString> traits() override;
-
-	////// Directories and files //////
-	QString jarModsDir() const;
-	QString resourcePacksDir() const;
-	QString texturePacksDir() const;
-	QString loaderModsDir() const;
-	QString coreModsDir() const;
-	QString libDir() const;
-	QString worldDir() const;
-	virtual QString instanceConfigFolder() const override;
 
 	virtual shared_qobject_ptr<Task> createUpdateTask() override;
 	virtual std::shared_ptr<Task> createJarModdingTask() override;
 	virtual QString createLaunchScript(AuthSessionPtr session) override;
 	QStringList verboseDescription(AuthSessionPtr session) override;
-
-	virtual QString intendedVersionId() const override;
-	virtual bool setIntendedVersionId(QString version) override;
-	virtual QString currentVersionId() const override;
-
-	QString getComponentVersion(const QString &uid) const;
-	bool setComponentVersion(const QString &uid, const QString &version);
-
-	virtual bool shouldUpdate() const override;
-	virtual void setShouldUpdate(bool val) override;
-
-	/**
-	 * reload the profile, including version json files.
-	 *
-	 * throws various exceptions :3
-	 */
-	void reloadProfile();
-
-	/// clears all version information in preparation for an update
-	void clearProfile();
-
-	/// get the current full version info
-	std::shared_ptr<MinecraftProfile> getMinecraftProfile() const;
-
-	virtual QDir jarmodsPath() const;
-	virtual QDir librariesPath() const;
-	virtual QDir versionsPath() const;
-	virtual bool providesVersionFile() const;
-
-	bool reload() override;
 
 	virtual QStringList extraArguments() const override;
 
@@ -112,16 +61,7 @@ protected:
 	std::shared_ptr<LaunchStep> createMainLaunchStep(LaunchTask *parent, AuthSessionPtr session) override;
 	QStringList validLaunchMethods() override;
 
-signals:
-	void versionReloaded();
 
-protected:
-	std::shared_ptr<MinecraftProfile> m_profile;
-	mutable std::shared_ptr<ModList> m_loader_mod_list;
-	mutable std::shared_ptr<ModList> m_core_mod_list;
-	mutable std::shared_ptr<ModList> m_resource_pack_list;
-	mutable std::shared_ptr<ModList> m_texture_pack_list;
-	mutable std::shared_ptr<WorldList> m_world_list;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<OneSixInstance>)

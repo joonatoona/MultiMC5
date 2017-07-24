@@ -36,8 +36,8 @@ void InstanceCreationTask::executeTask()
 	instanceSettings->registerSetting("InstanceType", "Legacy");
 
 	instanceSettings->set("InstanceType", "OneSix");
-	InstancePtr inst(new OneSixInstance(m_globalSettings, instanceSettings, stagingPath));
-	inst->setIntendedVersionId(m_version->descriptor());
+	auto inst = new OneSixInstance(m_globalSettings, instanceSettings, stagingPath);
+	inst->setComponentVersion("net.minecraft", m_version->descriptor());
 	inst->setName(m_instName);
 	inst->setIconKey(m_instIcon);
 	inst->init();
