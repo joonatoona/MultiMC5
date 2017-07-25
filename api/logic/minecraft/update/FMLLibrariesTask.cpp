@@ -2,17 +2,17 @@
 #include <FileSystem.h>
 #include <minecraft/VersionFilterData.h>
 #include "FMLLibrariesTask.h"
-#include "minecraft/onesix/OneSixInstance.h"
+#include "minecraft/MinecraftInstance.h"
+#include "minecraft/MinecraftProfile.h"
 
-
-FMLLibrariesTask::FMLLibrariesTask(OneSixInstance * inst)
+FMLLibrariesTask::FMLLibrariesTask(MinecraftInstance * inst)
 {
 	m_inst = inst;
 }
 void FMLLibrariesTask::executeTask()
 {
 	// Get the mod list
-	OneSixInstance *inst = (OneSixInstance *)m_inst;
+	MinecraftInstance *inst = (MinecraftInstance *)m_inst;
 	std::shared_ptr<MinecraftProfile> profile = inst->getMinecraftProfile();
 	bool forge_present = false;
 
@@ -88,7 +88,7 @@ void FMLLibrariesTask::fmllibsFinished()
 	if (!fmlLibsToProcess.isEmpty())
 	{
 		setStatus(tr("Copying FML libraries into the instance..."));
-		OneSixInstance *inst = (OneSixInstance *)m_inst;
+		MinecraftInstance *inst = (MinecraftInstance *)m_inst;
 		auto metacache = ENV.metacache();
 		int index = 0;
 		for (auto &lib : fmlLibsToProcess)

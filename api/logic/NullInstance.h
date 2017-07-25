@@ -33,10 +33,6 @@ public:
 	{
 		return nullptr;
 	}
-	virtual std::shared_ptr<Task> createJarModdingTask() override
-	{
-		return nullptr;
-	}
 	virtual QProcessEnvironment createEnvironment() override
 	{
 		return QProcessEnvironment();

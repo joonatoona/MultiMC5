@@ -23,17 +23,18 @@
 
 #include "minecraft/MinecraftProfile.h"
 #include "Exception.h"
-#include <minecraft/onesix/OneSixVersionFormat.h>
+#include <minecraft/OneSixVersionFormat.h>
 #include <FileSystem.h>
 #include <QSaveFile>
 #include <Env.h>
 #include <meta/Index.h>
-#include <minecraft/onesix/OneSixInstance.h>
+#include <minecraft/MinecraftInstance.h>
 #include <QUuid>
 
-MinecraftProfile::MinecraftProfile()
+MinecraftProfile::MinecraftProfile(MinecraftInstance * instance)
 	: QAbstractListModel()
 {
+	m_instance = instance;
 	clear();
 }
 

@@ -19,6 +19,12 @@ public:
 	virtual ~MinecraftInstance() {};
 	virtual void init() override;
 
+	QString typeName() const override;
+	QSet<QString> traits() override;
+	bool canExport() const override
+	{
+		return true;
+	}
 
 	////// Directories and files //////
 	QString jarModsDir() const;
@@ -32,14 +38,14 @@ public:
 	QDir librariesPath() const;
 	QDir versionsPath() const;
 	QString instanceConfigFolder() const override;
-	/// Path to the instance's minecraft directory.
-	QString minecraftRoot() const;
-	/// Path to the instance's minecraft/bin directory.
-	QString binRoot() const;
+	QString minecraftRoot() const; // Path to the instance's minecraft directory.
+	QString binRoot() const; // Path to the instance's minecraft bin directory.
+	QString getNativePath() const; // where to put the natives during/before launch
+	QString getLocalLibraryPath() const; // where the instance-local libraries should be
 
 
 	//////  Profile management //////
-	virtual void createProfile();
+	void createProfile();
 	std::shared_ptr<MinecraftProfile> getMinecraftProfile() const;
 	void reloadProfile();
 	void clearProfile();
@@ -52,43 +58,38 @@ public:
 	std::shared_ptr<ModList> resourcePackList() const;
 	std::shared_ptr<ModList> texturePackList() const;
 	std::shared_ptr<WorldList> worldList() const;
-	virtual QList<Mod> getJarMods() const;
-
-
-	//////  Mod Lists  //////
-	virtual std::shared_ptr<LaunchTask> createLaunchTask(AuthSessionPtr account) override;
-	virtual QString createLaunchScript(AuthSessionPtr session) = 0;
 
 
 	//////  Launch stuff //////
+	shared_qobject_ptr<Task> createUpdateTask() override;
+	std::shared_ptr<LaunchTask> createLaunchTask(AuthSessionPtr account) override;
+	QStringList extraArguments() const override;
+	QStringList verboseDescription(AuthSessionPtr session) override;
+	QList<Mod> getJarMods() const;
+	QString createLaunchScript(AuthSessionPtr session);
 	/// get arguments passed to java
 	QStringList javaArguments() const;
 
 	/// get variables for launch command variable substitution/environment
-	virtual QMap<QString, QString> getVariables() const override;
+	QMap<QString, QString> getVariables() const override;
 
 	/// create an environment for launching processes
-	virtual QProcessEnvironment createEnvironment() override;
+	QProcessEnvironment createEnvironment() override;
 
 	/// guess log level from a line of minecraft log
-	virtual MessageLevel::Enum guessLevel(const QString &line, MessageLevel::Enum level) override;
+	MessageLevel::Enum guessLevel(const QString &line, MessageLevel::Enum level) override;
 
-	virtual IPathMatcher::Ptr getLogFileMatcher() override;
+	IPathMatcher::Ptr getLogFileMatcher() override;
 
-	virtual QString getLogFileRoot() override;
+	QString getLogFileRoot() override;
 
-	virtual QString getStatusbarDescription() override;
+	QString getStatusbarDescription() override;
 
-	virtual QStringList getClassPath() const = 0;
-	virtual QStringList getNativeJars() const = 0;
+	virtual QStringList getClassPath() const;
+	virtual QStringList getNativeJars() const;
+	virtual QString getMainClass() const;
 
-	virtual QString getMainClass() const = 0;
-
-	virtual QString getNativePath() const = 0;
-
-	virtual QString getLocalLibraryPath() const = 0;
-
-	virtual QStringList processMinecraftArgs(AuthSessionPtr account) const = 0;
+	virtual QStringList processMinecraftArgs(AuthSessionPtr account) const;
 
 	virtual JavaVersion getJavaVersion() const;
 
@@ -100,9 +101,9 @@ signals:
 
 protected:
 	QMap<QString, QString> createCensorFilterFromSession(AuthSessionPtr session);
-	virtual QStringList validLaunchMethods() = 0;
-	virtual QString launchMethod();
-	virtual std::shared_ptr<LaunchStep> createMainLaunchStep(LaunchTask *parent, AuthSessionPtr session) = 0;
+	QStringList validLaunchMethods();
+	QString launchMethod();
+
 private:
 	QString prettifyTimeDuration(int64_t duration);
 

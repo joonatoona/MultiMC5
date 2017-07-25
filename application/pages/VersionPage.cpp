@@ -103,7 +103,7 @@ void VersionPage::setParentContainer(BasePageContainer * container)
 	m_container = container;
 }
 
-VersionPage::VersionPage(OneSixInstance *inst, QWidget *parent)
+VersionPage::VersionPage(MinecraftInstance *inst, QWidget *parent)
 	: QWidget(parent), ui(new Ui::VersionPage), m_inst(inst)
 {
 	ui->setupUi(this);

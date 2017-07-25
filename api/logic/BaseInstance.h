@@ -159,12 +159,6 @@ public:
 	std::shared_ptr<LaunchTask> getLaunchTask();
 
 	/*!
-	 * Returns a task that should be done right before launch
-	 * This task should do any extra preparations needed
-	 */
-	virtual std::shared_ptr<Task> createJarModdingTask() = 0;
-
-	/*!
 	 * Create envrironment variables for running the instance
 	 */
 	virtual QProcessEnvironment createEnvironment() = 0;

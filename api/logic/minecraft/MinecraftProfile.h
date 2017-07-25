@@ -29,7 +29,7 @@
 
 #include "multimc_logic_export.h"
 
-class OneSixInstance;
+class MinecraftInstance;
 
 
 class MULTIMC_LOGIC_EXPORT MinecraftProfile : public QAbstractListModel
@@ -37,7 +37,7 @@ class MULTIMC_LOGIC_EXPORT MinecraftProfile : public QAbstractListModel
 	Q_OBJECT
 
 public:
-	explicit MinecraftProfile();
+	explicit MinecraftProfile(MinecraftInstance * instance);
 	virtual ~MinecraftProfile();
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

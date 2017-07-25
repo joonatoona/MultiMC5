@@ -1,5 +1,3 @@
-#include "minecraft/onesix/OneSixInstance.h"
-
 #include "InstanceImportTask.h"
 #include "BaseInstance.h"
 #include "BaseInstanceProvider.h"
@@ -12,6 +10,8 @@
 #include <QtConcurrentRun>
 
 // FIXME: this does not belong here, it's Minecraft/Flame specific
+#include "minecraft/MinecraftInstance.h"
+#include "minecraft/MinecraftProfile.h"
 #include "minecraft/flame/FileResolvingTask.h"
 #include "minecraft/flame/PackManifest.h"
 #include "Json.h"
@@ -222,7 +222,7 @@ void InstanceImportTask::processFlame(const QFileInfo & manifest)
 	auto instanceSettings = std::make_shared<INISettingsObject>(configPath);
 	instanceSettings->registerSetting("InstanceType", "Legacy");
 	instanceSettings->set("InstanceType", "OneSix");
-	OneSixInstance instance(m_globalSettings, instanceSettings, m_packRoot);
+	MinecraftInstance instance(m_globalSettings, instanceSettings, m_packRoot);
 	auto mcVersion = pack.minecraft.version;
 	// Hack to correct some 'special sauce'...
 	if(mcVersion.endsWith('.'))
