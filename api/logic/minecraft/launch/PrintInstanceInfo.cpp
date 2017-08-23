@@ -80,6 +80,21 @@ void PrintInstanceInfo::executeTask()
     }
 #endif
 
+#ifdef Q_OS_WIN
+
+    char buff[1024];
+    FILE *fp = popen("wmic path win32_VideoController get description,adapterRAM,driverDate,DriverVersion,InstalledDisplayDrivers");
+    if (fp != NULL)
+    {
+        while (fgets(buff, 1024, fp) != NULL)
+        {
+            QStringList tlines = (QStringList() << QString::fromUtf8(buff));
+            logLines(tlines, MessageLevel::MultiMC);
+        }
+    }
+
+#endif
+
     logLines(lines, MessageLevel::MultiMC);
     emitSucceeded();
 }
