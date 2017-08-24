@@ -175,6 +175,12 @@ set(NEWS_SOURCES
 	news/NewsEntry.cpp
 )
 
+set(ERROR_SOURCES
+	# Common Error System
+	errors/ErrorChecker.h
+	errors/ErrorChecker.cpp
+)
+
 # Icon interface
 set(ICONS_SOURCES
 	# News System
@@ -449,6 +455,7 @@ set(LOGIC_SOURCES
 	${UPDATE_SOURCES}
 	${NOTIFICATIONS_SOURCES}
 	${NEWS_SOURCES}
+	${ERROR_SOURCES}
 	${STATUS_SOURCES}
 	${MINECRAFT_SOURCES}
 	${SCREENSHOTS_SOURCES}
