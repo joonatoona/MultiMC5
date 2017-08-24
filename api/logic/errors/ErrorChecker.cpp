@@ -36,8 +36,20 @@ void ErrorChecker::jsonDownloadFinished()
             // TODO: Parse to QRegExp flags
             err.flags = obj.value("flags").toString();
 
-            // TODO: Get locale
-            err.msg = obj.value("msg").toString();
+            QStringList locales = obj.keys().filter("msg");
+            QRegExp rx("msg@");
+
+            foreach (const QString &locale, locales)
+            {
+                rx.indexIn(locale);
+                if (rx.cap(0) == "msg")
+                {
+                    // Default locale
+                    err.msg.insert("en_US", obj.value("msg").toString());
+                    continue;
+                }
+                err.msg.insert(rx.cap(1), obj.value(rx.cap(0)).toString());
+            }
 
             m_errors.append(err);
         }

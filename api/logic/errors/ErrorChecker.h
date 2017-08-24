@@ -18,10 +18,8 @@ public:
     {
         QRegExp re;
         QString flags;
-        QString msg;
+        QMap<QString, QString> msg;
     };
-
-    QList<Error> getErrors() const;
 
 signals:
     void errorsLoaded();
